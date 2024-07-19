@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.DistanceMessageMapper">
+
+	<resultMap type="DistanceMessage" id="DistanceMessageResult">
+		<result property="id"    column="id"    />
+		<result property="messageImage"    column="message_image"    />
+		<result property="messageTextTitle"    column="message_text_title"    />
+		<result property="messageTextDescribe"    column="message_text_describe"    />
+		<result property="messageTextTime"    column="message_text_time"    />
+		<result property="messageText"    column="message_text"    />
+		<result property="createBy"    column="create_by"    />
+		<result property="createTime"    column="create_time"    />
+		<result property="updateBy"    column="update_by"    />
+		<result property="updateTime"    column="update_time"    />
+		<result property="remark"    column="remark"    />
+	</resultMap>
+
+	<sql id="selectDistanceMessageVo">
+		select id, message_image, message_text_title, message_text_describe, message_text_time, message_text, create_by, create_time, update_by, update_time, remark from distance_message
+	</sql>
+
+	<select id="selectDistanceMessageList" parameterType="DistanceMessage" resultMap="DistanceMessageResult">
+		<include refid="selectDistanceMessageVo"/>
+		<where>
+			<if test="messageImage != null  and messageImage != ''"> and message_image = #{messageImage}</if>
+			<if test="messageTextTitle != null  and messageTextTitle != ''"> and message_text_title = #{messageTextTitle}</if>
+			<if test="messageTextDescribe != null  and messageTextDescribe != ''"> and message_text_describe = #{messageTextDescribe}</if>
+			<if test="messageTextTime != null "> and message_text_time = #{messageTextTime}</if>
+			<if test="messageText != null  and messageText != ''"> and message_text = #{messageText}</if>
+		</where>
+	</select>
+
+	<select id="selectDistanceMessageById" parameterType="Long" resultMap="DistanceMessageResult">
+		<include refid="selectDistanceMessageVo"/>
+		where id = #{id}
+	</select>
+
+	<insert id="insertDistanceMessage" parameterType="DistanceMessage">
+		insert into distance_message
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="messageImage != null">message_image,</if>
+			<if test="messageTextTitle != null">message_text_title,</if>
+			<if test="messageTextDescribe != null">message_text_describe,</if>
+			<if test="messageTextTime != null">message_text_time,</if>
+			<if test="messageText != null">message_text,</if>
+			<if test="createBy != null">create_by,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="updateBy != null">update_by,</if>
+			<if test="updateTime != null">update_time,</if>
+			<if test="remark != null">remark,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="messageImage != null">#{messageImage},</if>
+			<if test="messageTextTitle != null">#{messageTextTitle},</if>
+			<if test="messageTextDescribe != null">#{messageTextDescribe},</if>
+			<if test="messageTextTime != null">#{messageTextTime},</if>
+			<if test="messageText != null">#{messageText},</if>
+			<if test="createBy != null">#{createBy},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateBy != null">#{updateBy},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+			<if test="remark != null">#{remark},</if>
+		</trim>
+	</insert>
+
+	<update id="updateDistanceMessage" parameterType="DistanceMessage">
+		update distance_message
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="messageImage != null">message_image = #{messageImage},</if>
+			<if test="messageTextTitle != null">message_text_title = #{messageTextTitle},</if>
+			<if test="messageTextDescribe != null">message_text_describe = #{messageTextDescribe},</if>
+			<if test="messageTextTime != null">message_text_time = #{messageTextTime},</if>
+			<if test="messageText != null">message_text = #{messageText},</if>
+			<if test="createBy != null">create_by = #{createBy},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="updateBy != null">update_by = #{updateBy},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="remark != null">remark = #{remark},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteDistanceMessageById" parameterType="Long">
+		delete from distance_message where id = #{id}
+	</delete>
+
+	<delete id="deleteDistanceMessageByIds" parameterType="String">
+		delete from distance_message where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>
